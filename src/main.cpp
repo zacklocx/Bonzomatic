@@ -205,6 +205,7 @@ int main(int argc, const char *argv[])
     if (options.has<jsonxx::String>("postExitCmd"))
     {
       sPostExitCmd = options.get<jsonxx::String>("postExitCmd");
+      Misc::defaultPostExitCmd = sPostExitCmd.c_str();
     }
     Capture::LoadSettings( options );
   }

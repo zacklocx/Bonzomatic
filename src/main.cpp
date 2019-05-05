@@ -337,7 +337,7 @@ int main(int argc, const char *argv[])
 
     for(int i=0; i<Renderer::keyEventBufferCount; i++)
     {
-      if (Renderer::keyEventBuffer[i].scanCode == 283) // F2
+      if (Renderer::keyEventBuffer[i].scanCode == 283 || (Renderer::keyEventBuffer[i].ctrl && Renderer::keyEventBuffer[i].scanCode == 't')) // F2
       {
         if (bTexPreviewVisible)
         {

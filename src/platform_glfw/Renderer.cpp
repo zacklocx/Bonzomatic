@@ -449,9 +449,14 @@ namespace Renderer
   void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
   {
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-      if ((key==GLFW_KEY_F4 && (mods&GLFW_MOD_ALT)) || key==GLFW_KEY_ESCAPE || (key==GLFW_KEY_ESCAPE&&(mods&GLFW_MOD_SHIFT))) {
+      if ((key==GLFW_KEY_F4 && (mods&GLFW_MOD_ALT)) || (key==GLFW_KEY_ESCAPE&&(mods&GLFW_MOD_SHIFT))) {
         run = false;
       }
+
+      if (key==GLFW_KEY_ESCAPE) {
+        exit(0);
+      }
+
       int sciKey = 0;
       bool bNormalKey = false;
       switch (key) {

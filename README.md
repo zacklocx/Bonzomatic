@@ -68,6 +68,17 @@ Create a `config.json` with e.g. the following contents: (all fields are optiona
   "postExitCmd":"copy_to_dropbox.bat" // this command gets ran when you quit Bonzomatic, and the shader filename gets passed to it as first parameter. Use this to take regular backups.
 }
 ```
+### Automatic shader backup
+If you want the shader to be backed up once you quit Bonzomatic, you can use the above `postExitCmd` parameter in the config, and use a batch file like this:
+```
+@echo off
+REM ### cf. https://stackoverflow.com/a/23476347
+for /f "tokens=2 delims==" %%a in ('wmic OS Get localdatetime /value') do set "dt=%%a"
+set "YY=%dt:~2,2%" & set "YYYY=%dt:~0,4%" & set "MM=%dt:~4,2%" & set "DD=%dt:~6,2%"
+set "HH=%dt:~8,2%" & set "Min=%dt:~10,2%" & set "Sec=%dt:~12,2%"
+copy %1 X:\MyShaderBackups\%YYYY%%MM%%DD%-%HH%%Min%%Sec%.glsl
+```
+This will copy the shader timestamped into a specified folder.
 
 ## Building
 As you can see you're gonna need [CMAKE](https://cmake.org/) for this, but don't worry, a lot of it is automated at this point.
@@ -113,21 +124,22 @@ https://github.com/Gargaj/Bonzomatic/wiki/How-to-set-up-a-Live-Coding-compo
 ## Credits and acknowledgements
 ### Original / parent project authors
 - "ScintillaGL" project by Mykhailo Parfeniuk (https://github.com/sopyer/ScintillaGL)
-- Riverwash LiveCoding Tool by Michał Staniszewski and Michal Szymczyk (http://www.plastic-demo.org/)
+- Riverwash LiveCoding Tool by Michał Staniszewski and Michal Szymczyk (http://www.plastic-demo.org)
 
 ### Libraries and other included software
-- Scintilla editing component by the Scintilla Dev Team (http://www.scintilla.org/)
-- OpenGL Extension Wrangler Library by Nigel Stewart (http://glew.sourceforge.net/)
+- Scintilla editing component by the Scintilla Dev Team (http://www.scintilla.org)
+- OpenGL Extension Wrangler Library by Nigel Stewart (http://glew.sourceforge.net)
 - mini_al by David Reid (https://github.com/dr-soft/mini_al)
-- KISSFFT by Mark Borgerding (https://github.com/mborgerding/kissfft/)
-- STB Image and Truetype libraries by Sean Barrett (http://nothings.org/)
+- KISSFFT by Mark Borgerding (https://github.com/mborgerding/kissfft)
+- STB Image and Truetype libraries by Sean Barrett (http://nothings.org)
 - GLFW by whoever made GLFW (http://www.glfw.org/faq.html)
 - JSON++ by Hong Jiang (https://github.com/hjiang/jsonxx)
 - NDI(tm) SDK by NewTek(tm) (http://www.newtek.com/ndi.html)
 
 These software are available under their respective licenses.
 
-The remainder of this project code was (mostly, I guess) written by Gargaj / Conspiracy and is public domain.OSX / macOS maintenance and ports by Alkama / Tpolm + Calodox; Linux maintenance by PoroCYon / K2.
+The remainder of this project code was (mostly, I guess) written by Gargaj / Conspiracy and is public domain.
+OSX / macOS maintenance and ports by Alkama / Tpolm + Calodox; Linux maintenance by PoroCYon / K2.
 
 ## Contact / discussion forum
 If you have anything to say, do it at http://www.pouet.net/topic.php?which=9881 or [![Join the chat at https://gitter.im/Gargaj/Bonzomatic](https://badges.gitter.im/Gargaj/Bonzomatic.svg)](https://gitter.im/Gargaj/Bonzomatic?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)

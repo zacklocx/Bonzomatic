@@ -2,10 +2,6 @@
 #include <string.h>
 #include <assert.h>
 
-#include <chrono>
-#include <sstream>
-#include <iomanip>
-
 #include "ShaderEditor.h"
 #include "Renderer.h"
 #include "FFT.h"
@@ -211,7 +207,7 @@ int main(int argc, const char *argv[])
     if (options.has<jsonxx::String>("postExitCmd"))
     {
       sPostExitCmd = options.get<jsonxx::String>("postExitCmd");
-      Misc::defaultPostExitCmd = sPostExitCmd.c_str();
+      Misc::postExitCmd = sPostExitCmd.c_str();
     }
     Capture::LoadSettings( options );
   }
@@ -343,22 +339,7 @@ int main(int argc, const char *argv[])
 
     for(int i=0; i<Renderer::keyEventBufferCount; i++)
     {
-      if (Renderer::keyEventBuffer[i].ctrl && Renderer::keyEventBuffer[i].scanCode == 's')
-      {
-        if ( !sPostExitCmd.empty() )
-        {
-          Misc::ExecuteCommand( sPostExitCmd.c_str(), Renderer::defaultShaderFilename );
-
-          auto now = std::chrono::system_clock::now();
-          auto time = std::chrono::system_clock::to_time_t( now );
-
-          std::ostringstream log;
-          log << std::put_time( std::localtime( &time ), "%F %T" ) << ": " << sPostExitCmd << " executed";
-
-          mDebugOutput.SetText( log.str().c_str() );
-        }
-      }
-      else if (Renderer::keyEventBuffer[i].scanCode == 283 || (Renderer::keyEventBuffer[i].ctrl && Renderer::keyEventBuffer[i].scanCode == 't')) // F2
+      if (Renderer::keyEventBuffer[i].scanCode == 283) // F2
       {
         if (bTexPreviewVisible)
         {

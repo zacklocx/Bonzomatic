@@ -452,8 +452,7 @@ namespace Renderer
       if ((key==GLFW_KEY_F4 && (mods&GLFW_MOD_ALT)) || (key==GLFW_KEY_ESCAPE&&(mods&GLFW_MOD_SHIFT))) {
         run = false;
       }
-
-      if (key==GLFW_KEY_ESCAPE) {
+      else if (key==GLFW_KEY_ESCAPE) {
         exit(0);
       }
 

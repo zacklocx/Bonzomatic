@@ -130,7 +130,7 @@ int main(int argc, const char *argv[])
   float fFFTSmoothingFactor = 0.9f; // higher value, smoother FFT
   float fFFTSlightSmoothingFactor = 0.6f; // higher value, smoother FFT
 
-  std::string sPostExitCmd;
+  std::string sStartupShader, sPostExitCmd;
 
   if (!options.empty())
   {
@@ -207,6 +207,11 @@ int main(int argc, const char *argv[])
       {
         midiRoutes[it->second->number_value_] = it->first;
       }
+    }
+    if (options.has<jsonxx::String>("startupShader"))
+    {
+      sStartupShader = options.get<jsonxx::String>("startupShader");
+      Renderer::defaultShaderFilename = sStartupShader.c_str();
     }
     if (options.has<jsonxx::String>("postExitCmd"))
     {

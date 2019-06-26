@@ -804,7 +804,7 @@ namespace Renderer
     if (pContext) pContext->Release();
     if (pSwapChain) pSwapChain->Release();
     if (pDevice) pDevice->Release();
-    if (!hWnd) 
+    if (hWnd) 
     {
       DestroyWindow(hWnd);
       UnregisterClass(_T("fwzwnd"),GetModuleHandle(NULL));

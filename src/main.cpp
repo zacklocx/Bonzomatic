@@ -155,6 +155,8 @@ int main(int argc, const char *argv[])
   int nTexPreviewWidth = 64;
   float fFFTSmoothingFactor = 0.9f; // higher value, smoother FFT
   float fFFTSlightSmoothingFactor = 0.6f; // higher value, smoother FFT
+  float fScrollXFactor = 1.0f;
+  float fScrollYFactor = 1.0f;
 
   std::string sStartupShader, sPostExitCmd;
 
@@ -225,6 +227,10 @@ int main(int argc, const char *argv[])
           editorOptions.eAutoIndent = aitNone;
         }
       }
+      if (options.get<jsonxx::Object>("gui").has<jsonxx::Number>("scrollXFactor"))
+        fScrollXFactor = options.get<jsonxx::Object>("gui").get<jsonxx::Number>("scrollXFactor");
+      if (options.get<jsonxx::Object>("gui").has<jsonxx::Number>("scrollYFactor"))
+        fScrollYFactor = options.get<jsonxx::Object>("gui").get<jsonxx::Number>("scrollYFactor");
     }
     if (options.has<jsonxx::Object>("midi"))
     {
@@ -368,7 +374,7 @@ int main(int argc, const char *argv[])
             mShaderEditor.ButtonUp( Scintilla::Point( Renderer::mouseEventBuffer[i].x, Renderer::mouseEventBuffer[i].y ), time * 1000, false );
             break;
           case Renderer::MOUSEEVENTTYPE_SCROLL:
-            mShaderEditor.WndProc( SCI_LINESCROLL, -Renderer::mouseEventBuffer[i].x, -Renderer::mouseEventBuffer[i].y);
+            mShaderEditor.WndProc( SCI_LINESCROLL, (int)(-Renderer::mouseEventBuffer[i].x * fScrollXFactor), (int)(-Renderer::mouseEventBuffer[i].y * fScrollYFactor));
             break;
         }
       }

@@ -54,6 +54,35 @@ enum AutoIndentationType {
   aitSmart
 };
 
+struct SHADEREDITOR_THEME {
+  unsigned int text;
+  unsigned int comment;
+  unsigned int number;
+  unsigned int op;
+  unsigned int keyword;
+  unsigned int type;
+  unsigned int builtin;
+  unsigned int preprocessor;
+  unsigned int selection;
+  unsigned int charBackground;
+  bool bUseCharBackground;
+
+  SHADEREDITOR_THEME()
+  : text( 0xFFFFFFFF )
+  , comment( 0xFF00FF00 )
+  , number( 0xFF0080FF )
+  , op( 0xFF00CCFF )
+  , keyword( 0xFF0066FF )
+  , type( 0xFFFFFF00 )
+  , builtin( 0xFF88FF44 )
+  , preprocessor( 0xFFC0C0C0 )
+  , selection( 0xC0CC9966 )
+  , charBackground( 0xC0000000 )
+  , bUseCharBackground( false )
+  {
+  }
+};
+
 struct SHADEREDITOR_OPTIONS {
   std::string sFontPath;
   int nFontSize;
@@ -63,6 +92,7 @@ struct SHADEREDITOR_OPTIONS {
   int nTabSize;
   bool bVisibleWhitespace;
   AutoIndentationType eAutoIndent;
+  SHADEREDITOR_THEME theme;
 };
 
 class ShaderEditor : public Scintilla::Editor
@@ -79,6 +109,7 @@ class ShaderEditor : public Scintilla::Editor
   int nTabSize;
   bool bVisibleWhitespace;
   AutoIndentationType eAutoIndent;
+  SHADEREDITOR_THEME theme;
 
 public:
   ShaderEditor(Scintilla::Surface *surfaceWindow);

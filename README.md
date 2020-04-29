@@ -29,10 +29,13 @@ You can configure Bonzomatic by creating a `config.json` and placing it next to 
 The file can have the following contents: (all fields are optional)
 ``` javascript
 {
-  "window":{ // default window size / state, if there's a setup dialog, it will override it
+  "window":{ // default window size / state; if there's a setup dialog, it will override it
     "width":1920,
     "height":1080,
     "fullscreen":true,
+  },
+  "audio":{ // default audio device settings; if there's a setup dialog, it will override it
+    "useInput":false, // if true, use line-in/mic/...; if false, attempt to create a loopback device and use stereo out
   },
   "font":{ // all paths in the file are also relative to the binary, but again, can be absolute paths if that's more convenient
     "file":"Input-Regular_(InputMono-Medium).ttf",
@@ -69,6 +72,19 @@ The file can have the following contents: (all fields are optional)
     "frameRate": 60.0, // frames per second
     "progressive": true, // progressive or interleaved?
   },
+  // this section is if you want to customise colors to your liking
+  "theme":{
+    "text": "FFFFFF", // color format is "RRGGBB" or "AARRGGBB" in hexadecimal
+    "comment": "00FF00",
+    "number": "FF8000",
+    "op": "FFCC00",
+    "keyword": "FF6600",
+    "type": "00FFFF",
+    "builtin": "44FF88",
+    "preprocessor": "C0C0C0",
+    "selection": "C06699CC", // background color when selecting text
+    "charBackground": "C0000000", // if set, this value will be used (instead of gui opacity) behind characters
+  },
   "postExitCmd":"copy_to_dropbox.bat" // this command gets ran when you quit Bonzomatic, and the shader filename gets passed to it as first parameter. Use this to take regular backups.
 }
 ```
@@ -101,9 +117,9 @@ The Bonzomatic.app bundle, resulting from the compilation, should be found in `.
 We do NOT recommend putting it in /Applications. Bonzomatic is looking for config.json files and resources living at the same level of the app.
 
 ### Linux
-You'll need ```xorg-dev``` and ```libglu1-mesa-dev```; after that ```cmake``` should take care of the rest:
+You'll need ```xorg-dev```, `libasound2-dev` and ```libglu1-mesa-dev```; after that ```cmake``` should take care of the rest:
 ```
-apt install xorg-dev libglu1-mesa-dev cmake
+apt install xorg-dev libglu1-mesa-dev libasound2-dev cmake
 cd Bonzomatic
 cmake .
 make
